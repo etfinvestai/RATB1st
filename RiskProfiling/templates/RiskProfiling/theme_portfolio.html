@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>📈 테마 ETF 포트폴리오 생성기</title>
+</head>
+<body>
+  <h1>🎯 상위 테마 ETF 포트폴리오</h1>
+
+  {% if error %}
+    <p style="color:red">{{ error }}</p>
+  {% endif %}
+
+  <form method="post">
+    {% csrf_token %}
+    <label>기준일 (예: 2025-03-31): <input type="date" name="base_date" required></label><br>
+    <label>AUM (예: 1000000000): <input type="number" name="aum" required></label><br>
+    <button type="submit">포트폴리오 생성</button>
+  </form>
+
+  {% if success %}
+    <hr>
+    <h3>📊 추천 ETF 포트폴리오</h3>
+    <table border="1" cellpadding="5">
+      <thead>
+        <tr>
+          <th>ETF명</th>
+          <th>티커</th>
+          <th>가격</th>
+          <th>수량</th>
+          <th>총금액</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for name, ticker, price, units, cost in portfolio %}
+        <tr>
+          <td>{{ name }}</td>
+          <td>{{ ticker }}</td>
+          <td>{{ price }}</td>
+          <td>{{ units }}</td>
+          <td>{{ cost|floatformat:0 }} 원</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <p><strong>총 사용 금액:</strong> {{ used_cash|floatformat:0 }} 원</p>
+  {% endif %}
+</body>
+</html>

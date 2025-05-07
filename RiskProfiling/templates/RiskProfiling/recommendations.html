@@ -1,0 +1,17 @@
+<h2>📈 포트폴리오 추천 결과 (Delta 기반)</h2>
+<table border="1">
+    <tr>
+        <th>ETF명</th>
+        <th>Ticker</th>
+        <th>Delta</th>
+        <th>비중 (%)</th>
+    </tr>
+    {% for r in recommendations %}
+    <tr>
+        <td>{{ r.name }}</td>
+        <td>{{ r.ticker }}</td>
+        <td>{{ r.delta }}</td>
+        <td>{{ r.weight }}</td>
+    </tr>
+    {% endfor %}
+</table>

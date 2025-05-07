@@ -1,0 +1,15 @@
+<!-- templates/RiskProfiling/upload_strategy_rank.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>전략 순위 업로드</title>
+</head>
+<body>
+  <h2>📤 Sub-strategy 순위 CSV 업로드</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="file" accept=".csv" required>
+    <button type="submit">업로드</button>
+  </form>
+</body>
+</html>

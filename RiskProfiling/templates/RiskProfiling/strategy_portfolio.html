@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>📈 주식형 ETF 포트폴리오</title>
+</head>
+<body>
+  <h1>📊 주식형 ETF 포트폴리오 생성기</h1>
+
+  <form method="post">
+    {% csrf_token %}
+    <label>기준일 (YYYY-MM-DD): <input type="date" name="base_date" required></label><br>
+    <label>투자금액 (예: 1000000000): <input type="number" name="total_invest" required></label><br>
+    <button type="submit">포트폴리오 생성</button>
+  </form>
+
+  {% if error %}
+    <p style="color: red;">{{ error }}</p>
+  {% endif %}
+
+  {% if success %}
+    <h2>✅ {{ base_date }} 기준 포트폴리오</h2>
+    <p><strong>총 투자금액:</strong> {{ total_invest|floatformat:0 }} 원</p>
+    <table border="1" cellpadding="5">
+      <thead>
+        <tr>
+          <th>ETF명</th>
+          <th>티커</th>
+          <th>Sub-strategy</th>
+          <th>단가</th>
+          <th>수량</th>
+          <th>투자금액</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in portfolio %}
+        <tr>
+          <td>{{ item.name }}</td>
+          <td>{{ item.ticker }}</td>
+          <td>{{ item.sub_strategy }}</td>
+          <td>{{ item.price }}</td>
+          <td>{{ item.units }}</td>
+          <td>{{ item.cost|floatformat:0 }} 원</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+
+  {% if zero_price_etfs %}
+    <h3 style="color:red;">❌ 가격 정보 없음 (무시된 ETF)</h3>
+    <ul>
+      {% for name in zero_price_etfs %}
+      <li>{{ name }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+</body>
+</html>

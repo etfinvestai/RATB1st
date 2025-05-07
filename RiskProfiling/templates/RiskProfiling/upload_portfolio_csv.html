@@ -1,0 +1,13 @@
+<h2>CSV로 포트폴리오 업로드</h2>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <label>CSV 파일: <input type="file" name="portfolio_file" required></label><br>
+  <button type="submit">업로드 및 NAV 계산</button>
+</form>
+
+{% if success %}
+  <p>✅ {{ created }}개 포트폴리오 생성 및 NAV 저장 완료</p>
+{% endif %}
+{% if error %}
+  <p style="color: red;">❌ {{ error }}</p>
+{% endif %}

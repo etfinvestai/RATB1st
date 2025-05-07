@@ -1,0 +1,11 @@
+<h2>ETF 주가 업로드</h2>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <input type="file" name="price_file" required>
+  <button type="submit">업로드</button>
+</form>
+{% if success %}
+<p>{{ uploaded_count }}개 주가가 업로드되었습니다.</p>
+{% endif %}
+
+<a href="{% url 'calculate_nav' %}">👉 NAV 계산하러 가기</a>

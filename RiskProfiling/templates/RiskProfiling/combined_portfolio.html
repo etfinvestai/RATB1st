@@ -1,0 +1,37 @@
+<h1>📊 주식 + 채권 ETF 통합 포트폴리오</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    <label>기초일 (base_date): <input type="date" name="base_date"></label><br>
+    <label>현재일 (today): <input type="date" name="today"></label><br>
+    <label>총 투자금액 (AUM): <input type="text" name="total_invest"></label><br>
+    <label>금리 r (%): <input type="text" name="rate" value="3.5"></label><br>
+    <label>변동성 σ (%): <input type="text" name="sigma" value="15"></label><br>
+    <label>행사가 K (optional): <input type="text" name="K"></label><br>
+    <button type="submit">포트폴리오 생성</button>
+</form>
+
+
+{% if success %}
+  <h3>📅 기준일: {{ base_date }} | 투자금: {{ total_invest }}</h3>
+  <table border="1">
+    <tr>
+      <th>유형</th><th>ETF명</th><th>티커</th><th>단가</th><th>수량</th><th>금액</th>
+    </tr>
+    {% for item in portfolio %}
+      <tr>
+        <td>{{ item.type }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.ticker }}</td>
+        <td>{{ item.price }}</td>
+        <td>{{ item.units }}</td>
+        <td>{{ item.cost|floatformat:0 }} 원</td>
+      </tr>
+    {% endfor %}
+  </table>
+  <p><strong>총 투자금액:</strong> {{ total_cost|floatformat:0 }} 원</p>
+  <p><strong>잔여 현금:</strong> {{ remain_cash|floatformat:0 }} 원</p>
+{% endif %}
+{% if error %}
+  <p style="color:red;">{{ error }}</p>
+{% endif %}

@@ -1,0 +1,45 @@
+<h2>{{ portfolio.name }} NAV 추이</h2>
+
+<canvas id="navChart" width="800" height="400"></canvas>
+
+<pre>
+  dates: {{ dates }}
+  values: {{ values }}
+</pre>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // ✅ safe + escapejs → JavaScript 에서 인식 가능한 JSON 문자열로 변환
+  const labels = JSON.parse('{{ dates|safe|escapejs }}');
+  const values = JSON.parse('{{ values|safe|escapejs }}');
+
+  const ctx = document.getElementById('navChart').getContext('2d');
+  const navChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'NAV',
+        data: values,
+        borderColor: 'rgba(54, 162, 235, 1)',
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        fill: true,
+        tension: 0.1
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: false,
+          suggestedMin: Math.min(...values) * 0.95,
+          suggestedMax: Math.max(...values) * 1.05,
+          title: { display: true, text: 'NAV (원)' }
+        },
+        x: {
+          title: { display: true, text: '날짜' }
+        }
+      }
+    }
+  });
+</script>

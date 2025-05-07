@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{ etf_name }} Delta 계산</title>
+</head>
+<body>
+  <h1>📊 {{ etf_name }} Delta 계산기</h1>
+
+  {% if error %}
+    <p style="color: red;">{{ error }}</p>
+  {% endif %}
+
+  <form method="post">
+    {% csrf_token %}
+    <label>기준일 (Base Date): <input type="date" name="base_date" value="{{ base_date }}" required></label><br>
+    <label>계산일 (Today): <input type="date" name="today" value="{{ today }}" required></label><br>
+    <label>금리 r (%): <input type="number" step="0.01" name="rate" value="{{ r }}" required></label><br>
+    <label>변동성 σ (%): <input type="number" step="0.01" name="sigma" value="{{ sigma }}" required></label><br>
+    <label>기준가격 K: <input type="number" step="0.01" name="K" value="{{ K }}" required></label><br>
+    <label>총 AUM (예: 1000000000): <input type="number" name="aum" value="{{ aum }}" required></label><br>
+    <button type="submit">Delta 계산 & 포트폴리오 생성</button>
+  </form>
+
+  {% if success %}
+    <hr>
+    <h3>✅ Delta 계산 결과</h3>
+    <ul>
+      <li>기준일 (K): {{ base_date }} → {{ K }}</li>
+      <li>계산일 (F): {{ today }} → {{ F }}</li>
+      <li>T: {{ T }}</li>
+      <li>금리 r: {{ r }}%</li>
+      <li>변동성 σ: {{ sigma }}%</li>
+      <li><strong>Δ (Delta): {{ delta }}</strong></li>
+    </ul>
+
+    <hr>
+    <h3>📈 포트폴리오 구성</h3>
+    <table border="1" cellpadding="5">
+      <thead>
+        <tr>
+          <th>ETF명</th>
+          <th>티커</th>
+          <th>가격</th>
+          <th>수량</th>
+          <th>총금액</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for name, ticker, price, units, cost in portfolio %}
+        <tr>
+          <td>{{ name }}</td>
+          <td>{{ ticker }}</td>
+          <td>{{ price }}</td>
+          <td>{{ units }}</td>
+          <td>{{ cost|floatformat:0 }} 원</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <p><strong>총 사용 금액:</strong> {{ used_cash|floatformat:0 }} 원</p>
+  {% endif %}
+</body>
+</html>

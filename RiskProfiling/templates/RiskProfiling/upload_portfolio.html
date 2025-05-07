@@ -1,0 +1,24 @@
+<h2>포트폴리오 직접 입력</h2>
+<form method="post">
+  {% csrf_token %}
+  <label>포트폴리오 이름: <input type="text" name="portfolio_name" required></label><br>
+  <label>포트폴리오 유형:
+    <select name="portfolio_type" required>
+      <option value="equity">주식형</option>
+      <option value="bond">채권형</option>
+      <option value="combined">혼합형</option>
+    </select>
+  </label><br>
+  <label>기준일: <input type="date" name="base_date" required></label><br>
+  <label>ETF 입력 (형식: ticker,quantity 줄바꿈으로 여러 개)</label><br>
+  <textarea name="etf_data" rows="8" cols="40" placeholder="305720,10&#10;122630,5" required></textarea><br>
+  <button type="submit">포트폴리오 저장 및 NAV 계산</button>
+</form>
+
+{% if success %}
+  <p>✅ {{ portfolio_name }} 포트폴리오 저장 완료!</p>
+  <p>NAV ({{ date }}) : {{ nav }}</p>
+{% endif %}
+{% if error %}
+  <p style="color: red;">❌ {{ error }}</p>
+{% endif %}

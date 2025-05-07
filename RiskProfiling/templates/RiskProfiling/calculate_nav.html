@@ -1,0 +1,20 @@
+<h2>NAV 계산 (기간 입력)</h2>
+<form method="post">
+  {% csrf_token %}
+  <label>시작일: <input type="date" name="start_date" required></label><br>
+  <label>종료일: <input type="date" name="end_date" required></label><br>
+  <button type="submit">NAV 계산 실행</button>
+</form>
+
+{% if success %}
+  <p>✅ NAV 계산 완료!</p>
+  <ul>
+    {% for name, date, nav in results %}
+      <li>{{ date }} | {{ name }}: {{ nav }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+
+{% if error %}
+  <p style="color: red;">❌ {{ error }}</p>
+{% endif %}

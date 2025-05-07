@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>투자자 성향 설문</title>
+</head>
+<body>
+    <h1>투자자 성향 분석 설문지</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">제출하기</button>
+    </form>
+</body>
+</html>

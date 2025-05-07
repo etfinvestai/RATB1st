@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>업로드 결과</title>
+</head>
+<body>
+  <h1>📊 전략 랭킹 업로드 결과</h1>
+
+  {% if errors %}
+    <h3 style="color:red;">❌ 오류 발생한 항목들:</h3>
+    <ul>
+      {% for error in errors %}
+        <li>{{ error }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <p>✅ 총 {{ success_count }}개 전략 랭킹이 저장되었습니다.</p>
+  <a href="/admin/RiskProfiling/strategyrank/">📂 관리 페이지로 이동</a>
+
+  <hr>
+  <h2>📈 전략 포트폴리오 생성</h2>
+  <form action="{% url 'strategy_portfolio' %}" method="post">
+    {% csrf_token %}
+    <label for="base_date">기준일 (YYYY-MM-DD):</label>
+    <input type="date" id="base_date" name="base_date" required><br><br>
+
+    <label for="aum">총 투자금액 (원):</label>
+    <input type="number" id="aum" name="aum" value="1000000000" required><br><br>
+
+    <button type="submit">포트폴리오 생성</button>
+  </form>
+</body>
+</html>

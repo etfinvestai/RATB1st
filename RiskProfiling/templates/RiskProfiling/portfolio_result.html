@@ -1,0 +1,20 @@
+<h2>📊 {{ investor.name }}님의 맞춤형 포트폴리오</h2>
+<p>성향: {{ investor.profile_type }}</p>
+<table border="1">
+  <tr>
+    <th>ETF명</th>
+    <th>Ticker</th>
+    <th>자산구분</th>
+    <th>Delta</th>
+    <th>비중 (%)</th>
+  </tr>
+  {% for etf in portfolio %}
+  <tr>
+    <td>{{ etf.name }}</td>
+    <td>{{ etf.ticker }}</td>
+    <td>{{ etf.asset_class }}</td>
+    <td>{{ etf.delta }}</td>
+    <td>{{ etf.weight }}</td>
+  </tr>
+  {% endfor %}
+</table>
