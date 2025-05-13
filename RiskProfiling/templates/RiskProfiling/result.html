@@ -1,12 +1,13 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <title>설문 결과</title>
-</head>
-<body>
-  <h2>{{ survey.name }}님의 투자자 성향 결과</h2>
-  <p>총점: {{ survey.score }}</p>
-  <p>분류: {{ survey.profile_type }}</p>
-</body>
-</html>
+<h2>투자자님의 투자 성향은 "<strong>{{ profile_type }}</strong>"입니다.</h2>
+<p>이제 아래의 5가지 투자 스타일 중, 선호하는 전략을 선택해주세요. 이 선택은 투자자의 성향과 목표에 따라 포트폴리오 구성을 도와드립니다.</p>
+
+<form method="post">
+  {% csrf_token %}
+  <label><input type="radio" name="strategy_choice" value="1"> 1. 예금과 채권ETF 중심의 포트폴리오</label><br>
+  <label><input type="radio" name="strategy_choice" value="2"> 2. 자산배분 포트폴리오</label><br>
+  <label><input type="radio" name="strategy_choice" value="3"> 3. 시장대표지수 ETF + 종합채권 ETF</label><br>
+  <label><input type="radio" name="strategy_choice" value="4"> 4. 고배당 ETF 중심 포트폴리오</label><br>
+  <label><input type="radio" name="strategy_choice" value="5"> 5. 시장을 주도하는 테마 ETF 중심 포트폴리오</label><br><br>
+
+  <button type="submit">포트폴리오 추천 받기</button>
+</form>

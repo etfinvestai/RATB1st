@@ -16,7 +16,8 @@ class InvestorSurvey(models.Model):
     is_vulnerable = models.BooleanField(default=False)  # ✅ 이 줄 추가!
     score = models.FloatField(null=True, blank=True)
     profile_type = models.CharField(max_length=30, null=True, blank=True)
-
+    selected_strategy = models.CharField(max_length=1, null=True, blank=True)
+    
     def __str__(self):
         return f"{self.name} ({self.age})"
 

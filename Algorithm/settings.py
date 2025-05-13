@@ -32,7 +32,6 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     "RiskProfiling.apps.RiskprofilingConfig",
-    "RiskProfiling.utils.black_models",    
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",

@@ -75,6 +75,19 @@ def survey_result_view(request, pk):
     survey = InvestorSurvey.objects.get(pk=pk)
     return render(request, 'RiskProfiling/result.html', {'survey': survey})
 
+def strategy_selection(request, investor_id):
+    investor = InvestorSurvey.objects.get(id=investor_id)
+
+    if request.method == 'POST':
+        strategy = request.POST.get('strategy_choice')
+        investor.selected_strategy = strategy
+        investor.save()
+        return redirect('portfolio_recommendation', investor_id=investor.id)
+
+    return render(request, 'strategy_selection.html', {
+        'profile_type': investor.profile_type,
+    })
+
 def portfolio_recommend_view(request, investor_id):
     investor = get_object_or_404(InvestorSurvey, pk=investor_id)
     profile = investor.profile_type

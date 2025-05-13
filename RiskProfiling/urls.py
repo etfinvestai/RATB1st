@@ -10,6 +10,8 @@ from .views import portfolio_nav_chart_view
 urlpatterns = [
     path('', views.investor_survey_view, name='investor_survey'),  # 기본 설문
     path('result/<int:pk>/', views.survey_result_view, name='survey_result'),  # 설문 결과
+    path('strategy-selection/<int:investor_id>/', views.strategy_selection, name='strategy_selection'),
+    
     path('recommend/<int:investor_id>/', views.portfolio_recommend_view, name='portfolio_recommend'),  # 포트폴리오 추천
     path('deltas/', views.etf_deltas_view, name='etf_deltas'),  # 🔥 ETF Delta 목록 보기 추가
     path('upload_strategy_rank/', upload_strategy_rank_view, name='upload_strategy_rank'),
